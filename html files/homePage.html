@@ -1,0 +1,53 @@
+<!-- homePage.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Movie Database</title>
+  </head>
+  <body>
+    <h1>Movie Database</h1>
+    <table id="movieTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Movie Name</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="window.location.href='addMovie.html'">Add Movie</button>
+    <button onclick="window.location.href='searchMovie.html'">
+      Search Movie
+    </button>
+    <button onclick="window.location.href='updateMovie.html'">
+      Update Movie
+    </button>
+    <button onclick="window.location.href='deleteMovie.html'">
+      Delete Movie
+    </button>
+
+    <script>
+      fetch("/movies")
+        .then((response) => response.json())
+        .then((data) => {
+          const tableBody = document.querySelector("#movieTable tbody");
+          data.forEach((movie) => {
+            const row = tableBody.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+            cell1.textContent = movie.id;
+            cell2.textContent = movie.name;
+            cell3.textContent = movie.rating;
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
+  </body>
+</html>
